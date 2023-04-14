@@ -61,3 +61,11 @@ app.post('/api/notes', (req, res) => {
   })
 
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './index.html'));
+});
+
+app.listen(PORT, () =>
+  console.log(`Example app listening at http://localhost:${PORT}`)
+);
