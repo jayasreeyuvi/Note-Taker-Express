@@ -39,3 +39,25 @@ app.get('/api/notes', (req, res) => {
   })
   res.json(db);
 });
+
+app.post('/api/notes', (req, res) => {
+  fs.readFile(path.join(__dirname, './db/db.json'), (err, data) => {
+    if (err) {
+      res.status(500).send('Error on reading the file')
+    }
+
+    console.log(data);
+    let notesTake = JSON.parse(data);
+    notesTake.push(req.body);
+    res.send('Data written successfully')
+    res.json(fs.writeFile('./db/db.json', JSON.stringify(notesTake), (err) => 
+    {
+      if (err) {
+        res.status(500).send('Error on writing the file')
+      }
+      
+    }))
+
+  })
+
+});
