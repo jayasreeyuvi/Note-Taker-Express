@@ -16,3 +16,26 @@ console.log(db);
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+
+
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static('public'));
+
+
+
+app.get('/notes', (req, res) =>
+  res.sendFile(path.join(__dirname, './notes.html'))
+);
+
+
+app.get('/api/notes', (req, res) => {
+  fs.readFile('./db/db.json', (err, data) => {
+    if (err) throw err;
+    db = JSON.parse(data);
+    //console.log(db);
+  })
+  res.json(db);
+});
